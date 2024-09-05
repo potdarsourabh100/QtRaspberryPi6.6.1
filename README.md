@@ -1,3 +1,49 @@
+# Preparing the RPI CM4 board for mouting
+
+Before you can set the eMMC storage into 'USB mass storage' mode, you have to put a jumper over the first set of pins on the 'J2' jumper—the jumper labeled "Fit jumper to disable eMMC boot":
+
+J2 jumper for fit to disable eMMC Boot Raspberry Pi Compute Module 4 IO Board. You could also pop any kind of conductor between the two pins, like a female-to-female jumper.
+Then, plug a USB cable from your computer (in my case, my Mac—but it could be a Windows or Linux computer too) into the 'USB Slave' micro USB port on the IO Board, and plug in power:
+Plug in USB Slave and power on Raspberry Pi Compute Module 4 IO Board for eMMC flashing
+The board will power on, and you'll see the red 'D1' LED turn on, but the Compute Module won't boot. The eMMC module should now be ready for the next step.
+Using usbboot to mount the eMMC storage
+The next step is to download the Raspberry Pi usbboot repository, install a required USB library on your computer, and build the rpiboot executable, which you'll use to mount the storage on your computer. I did all of this in the Terminal application on my Mac.
+
+## LibUSB drivers for communication
+
+First, make sure you have the libusb library installed:
+
+On my Mac, I have Homebrew installed, so I ran: 
+```bash
+brew install pkgconfig libusb
+```
+On Linux (e.g. another Raspberry Pi), run: 
+
+```bash
+sudo apt install libusb-1.0-0-dev
+```
+Second, clone the usbboot repository to your computer:
+```bash
+git clone --depth=1 https://github.com/raspberrypi/usbboot
+```
+Third, cd into the usbboot directory and build rpiboot:
+```bash
+cd usbboot
+make
+```
+Now there should be an rpiboot executable in the directory. To mount the eMMC storage, run:
+```bash
+sudo ./rpiboot
+```
+And a few seconds later, after it finishes doing its work, you should see the boot volume mounted on your Mac (or on whatever Linux computer you're using). You might also notice the D2 LED lighting up; that means there is disk read/write activity on the eMMC.
+
+## Flashing Raspberry Pi OS onto the eMMC
+
+At this point, the eMMC storage behaves just like a microSD card or USB drive that you plugged into your computer. Use an application like the Raspberry Pi Imager to flash Raspberry Pi OS (or any OS of your choosing) to the eMMC:
+
+Raspberry Pi Imager choose eMMC storage to flash. At this point, if you don't need to make any modifications to the contents of the boot volume, you could disconnect the IO board (eject the boot volume if it's still mounted!) USB slave port connection, disconnect power, then remove the eMMC Boot disable jumper on J2. Then plug power back in, and the CM4 should now boot off it's (freshly-flashed) eMMC storage! If you ever need to mount the boot volume or re-flash the eMMC storage, just run sudo ./rpiboot again.
+
+
 # Qt 6.6.1 cross compilation for Raspberry pi 4
 
 In this page, you can find related steps to compile Qt6.6.1 for raspberr pi 4
