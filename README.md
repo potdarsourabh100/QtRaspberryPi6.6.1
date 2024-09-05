@@ -606,6 +606,59 @@ Send binaries to Rasperry pi
 rsync -avz --rsync-path="sudo rsync" $HOME/qt6/pi/* pi@192.168.29.23:/usr/local/qt6
 ```
 
+## With Qt Creator
+Set up **Compilers**.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/e98645c4-cf99-45e3-a8b4-ecc0899d6fa0)
+
+Set up **Debuggers**.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/f75adf17-b8eb-4149-a5fc-cf59978aa3d9)
+
+Set up **Devices**.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/57609ea4-6901-41a8-8264-c6bb7aeac844)
+
+Click **Deploy Public Key...** to deploy the key. Create one if not existed.
+
+Test the device.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/9883e600-7963-48e3-98fc-dc3f2e651bff)
+
+Set up **Qt Versions**.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/6c43b6f0-a256-4d2d-86f6-80bb393602af)
+
+Set up **Kits**.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/93e04b07-7cbc-43d6-a17c-53fe6d272de9)
+
+On **CMake Configuration** opton, click Change and add follow commands. **You should modify the following commands to your needs.**
+```
+-DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/pmy/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
+```
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/d7c4600a-7058-4541-bdfd-ce184e7fd94c)
+
+## Test HelloWorld
+On **Help** option select **About Plugins**.Then uncheck **ClangCodeModel**(**No need for Qt Creator 10 or later**)..
+
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/efb1db08-c5cc-4210-adfe-85507e36d329)
+
+Append following piece of code to the end of CMakeLists.txt(**No need for Qt Creator 10 or later**).
+```
+install(TARGETS HelloWorld
+    RUNTIME DESTINATION ""
+    BUNDLE DESTINATION ""
+    LIBRARY DESTINATION ""
+)
+```
+Goto **Projects**
+Under **Run** section, on **X11 Forwarding** check **Forward to local display** and input :0 to the text field. 
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/b396954b-fb04-48ae-a3c4-8ae67178513e)
+
+Under **Environment** section, click **Details** to expand the environment option. Click **Add**, then on **Variable** column type **LD_LIBRARY_PATH**. On the **Value** column, type **:/usr/local/qt6/lib/**.
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/059f275c-bfa4-4357-b4b6-82880b5c1054)
+
+Run.
+
+![image](https://github.com/MuyePan/CrossCompileQtForRpi/assets/136073506/ee26ad77-f370-433b-8734-89e70c21903c)
+
+We have HelloWorld running on rpi now.
+
 
 
 
