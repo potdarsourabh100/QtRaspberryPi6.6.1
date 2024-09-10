@@ -43,6 +43,22 @@ At this point, the eMMC storage behaves just like a microSD card or USB drive th
 
 Raspberry Pi Imager choose eMMC storage to flash. At this point, if you don't need to make any modifications to the contents of the boot volume, you could disconnect the IO board (eject the boot volume if it's still mounted!) USB slave port connection, disconnect power, then remove the eMMC Boot disable jumper on J2. Then plug power back in, and the CM4 should now boot off it's (freshly-flashed) eMMC storage! If you ever need to mount the boot volume or re-flash the eMMC storage, just run sudo ./rpiboot again.
 
+## Enable openssh-server for Raspberry pi 4
+1. To enable an SSH server on a Raspberry Pi using the terminal, you can do the following:
+2. Open the terminal
+3. Enter the command sudo raspi-config
+4. Use the arrow keys to navigate to Interfacing Options
+5. Press Enter
+6. Go to SSH, and press Enter
+7. When prompted, select Yes
+8. Select Enter to confirm, then click Finish to exit raspi-config
+9. Close the terminal window 
+ 
+## To connect to an SSH server on a Raspberry Pi from a computer, you can do the following:
+1. Open a terminal window on your computer
+2. Enter the command ssh <username>@<ip address>
+3. Type yes to continue
+4. Enter your account password when prompted
 
 # Qt 6.6.1 cross compilation for Raspberry pi 4
 
