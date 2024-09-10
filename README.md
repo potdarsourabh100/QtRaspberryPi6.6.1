@@ -202,7 +202,7 @@ sudo apt-get upgrade
 ```
 Install dependencies
 ```bash
-$ sudo apt-get install make build-essential cmake libclang-dev ninja-build gcc git bison \
+sudo apt-get install make build-essential cmake libclang-dev ninja-build gcc git bison \
 python3 gperf pkg-config libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev \
 libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-glx0-dev \
 libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev \
