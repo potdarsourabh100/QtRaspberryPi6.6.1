@@ -56,7 +56,7 @@ Raspberry Pi Imager choose eMMC storage to flash. At this point, if you don't ne
  
 ## To connect to an SSH server on a Raspberry Pi from a computer, you can do the following:
 1. Open a terminal window on your computer
-2. Enter the command ssh <username>@<ip address>
+2. Enter the command ssh username@ip address
 3. Type yes to continue
 4. Enter your account password when prompted
 
