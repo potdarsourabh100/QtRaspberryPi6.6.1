@@ -122,12 +122,7 @@ libxcb-xfixes0-dev libxrender-dev libxcb-shape0-dev libxcb-randr0-dev \
 libxcb-glx0-dev libxi-dev libdrm-dev libxcb-xinerama0 libxcb-xinerama0-dev \
 libatspi2.0-dev libxcursor-dev libxcomposite-dev libxdamage-dev \
 libxss-dev libxtst-dev libpci-dev libcap-dev libxrandr-dev \
-libdirectfb-dev libaudio-dev libxkbcommon-x11-dev gdbserver
-```
-Install the dependencies
-
-```bash
-sudo apt-get install \
+libdirectfb-dev libaudio-dev libxkbcommon-x11-dev gdbserver \
 libboost-all-dev libudev-dev libinput-dev libts-dev libmtdev-dev \
 libjpeg-dev libfontconfig1-dev libssl-dev libdbus-1-dev libglib2.0-dev \
 libxkbcommon-dev libegl1-mesa-dev libgbm-dev libgles2-mesa-dev \
@@ -147,12 +142,27 @@ libxcb-glx0-dev libxi-dev libdrm-dev libxcb-xinerama0 libxcb-xinerama0-dev \
 libatspi2.0-dev libxcursor-dev libxcomposite-dev libxdamage-dev \
 libxss-dev libxtst-dev libpci-dev libcap-dev libxrandr-dev \
 libdirectfb-dev libaudio-dev libxkbcommon-x11-dev gdbserver\
-libgstreamer1.0-dev gdbserver libxcb1 libxcb-cursor0
+libgstreamer1.0-dev gdbserver libxcb1 libxcb-cursor0 libboost-all-dev \
+libudev-dev libinput-dev libts-dev libmtdev-dev libjpeg-dev libfontconfig1-dev \
+libssl-dev libdbus-1-dev libglib2.0-dev libxkbcommon-dev libegl1-mesa-dev \
+libgbm-dev libgles2-mesa-dev mesa-common-dev libasound2-dev libpulse-dev gstreamer1.0-omx \
+libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev  gstreamer1.0-alsa libvpx-dev libsrtp2-dev \
+libsnappy-dev libnss3-dev "^libxcb.*" flex bison libxslt-dev ruby gperf libbz2-dev libcups2-dev \
+libatkmm-1.6-dev libxi6 libxcomposite1 libfreetype6-dev libicu-dev libsqlite3-dev libxslt1-dev 
 ```
 for QT based packages please provide following commands:
 ```bash
 sudo apt-get remove --purge qt6-base-dev
 sudo apt-get install qt6-base-dev
+```
+Append following piece of code to the end of ~/.bashrc.
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qt6/lib/
+```
+
+Update the changes.
+```bash
+source ~/.bashrc
 ```
 
 After this all, you should be able to see opengl libraries under /opt/vc/lib/ directory. This is important for future steps. Check like this:
