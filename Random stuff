@@ -48,6 +48,27 @@ Section "Screen"
 EndSection
 Save the file and reboot again:
 
+Option 1: Create Xorg Configuration
+Create a new Xorg configuration file for your displays:
+
+bash
+Copy code
+sudo nano /etc/X11/xorg.conf.d/10-monitor.conf
+Add the following configuration to set the orientation:
+
+ini
+Copy code
+Section "Monitor"
+    Identifier "HDMI-1"
+    Option "Rotate" "normal"  # or left, right, inverted
+EndSection
+
+Section "Monitor"
+    Identifier "HDMI-2"
+    Option "Rotate" "normal"  # or left, right, inverted
+EndSection
+Save and reboot:
+
 bash
 Copy code
 sudo reboot
