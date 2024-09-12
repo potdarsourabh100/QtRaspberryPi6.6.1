@@ -827,17 +827,10 @@ $HOME/qt6/pi/bin/qt-configure-module ../src/qtdeclarative-everywhere-src-6.6.1
 cmake --build . --parallel 8
 cmake --install .
 ```
-
-
-
-
-
-
-
-
-
-
-
+Send the binaries to rpi. You should modify the following commands to your needs.
+```bash
+rsync -avz --rsync-path="sudo rsync" $HOME/qt6/pi/* pi@192.168.29.23:/usr/local/qt6
+```
 
 
 
