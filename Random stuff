@@ -1,3 +1,6 @@
+sudo apt-get install lxsession
+
+
 Step 3: X11 Configuration (for multiple screens)
 To manage both HDMI outputs independently, X11 needs to treat them as separate displays:
 
