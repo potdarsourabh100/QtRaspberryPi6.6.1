@@ -75,3 +75,48 @@ Save and reboot:
 bash
 Copy code
 sudo reboot
+
+Create a Startup Script:
+
+Create a script to run the xinput commands and launch the QT applications:
+
+bash
+Copy code
+sudo nano /usr/local/bin/start_dual_touch_qt.sh
+Add the Following to the Script:
+
+bash
+Copy code
+#!/bin/bash
+# Map touchscreens to their respective displays
+xinput map-to-output 10 HDMI-1
+xinput map-to-output 11 HDMI-2
+
+# Launch QT applications on separate screens
+export QT_QPA_EGLFS_PHYSICAL_SCREEN=0
+/path/to/your_qt_application_1 &
+
+export QT_QPA_EGLFS_PHYSICAL_SCREEN=1
+/path/to/your_qt_application_2 &
+Make the Script Executable:
+
+bash
+Copy code
+sudo chmod +x /usr/local/bin/start_dual_touch_qt.sh
+Add to Autostart:
+
+Add this script to your system's startup sequence by editing the LXDE autostart file:
+
+bash
+Copy code
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+Add the following line at the end:
+
+bash
+Copy code
+@/usr/local/bin/start_dual_touch_qt.sh
+Reboot the System:
+
+bash
+Copy code
+sudo reboot
