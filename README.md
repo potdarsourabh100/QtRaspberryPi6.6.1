@@ -732,9 +732,101 @@ Run.
 
 We have HelloWorld running on rpi now.
 
+# Add QML module
+Download source code.
 
+```bash
+cd ~/qt6/src
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtshadertools-everywhere-src-6.6.1.tar.xz
+tar xf qtshadertools-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtdeclarative-everywhere-src-6.6.1.tar.xz
+tar xf qtdeclarative-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtserialport-everywhere-src-6.6.1.tar.xz
+tar xf qtserialport-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtserialbus-everywhere-src-6.6.1.tar.xz
+tar xf qtserialbus-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtquicktimeline-everywhere-src-6.6.1.tar.xz
+tar xf qtquicktimeline-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtvirtualkeyboard-everywhere-src-6.6.1.tar.xz
+tar xf qtvirtualkeyboard-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtwayland-everywhere-src-6.6.1.tar.xz
+tar xf qtwayland-everywhere-src-6.6.1.tar.xz
+wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qttools-everywhere-src-6.6.1.tar.xz
+tar xf qttools-everywhere-src-6.6.1.tar.xz
+```
+Build the modules for host
+```bash
+cd ~/qt6/host-build
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtserialport-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtserialbus-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtquicktimeline-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtvirtualkeyboard-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtwayland-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qttools-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtshadertools-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/host/bin/qt-configure-module ../src/qtdeclarative-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+```
 
-
+Build the modules for rpi
+```bash
+cd ~/qt6/pi-build
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtserialport-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtserialbus-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtquicktimeline-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtvirtualkeyboard-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtwayland-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qttools-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtshadertools-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+rm -rf *
+$HOME/qt6/pi/bin/qt-configure-module ../src/qtdeclarative-everywhere-src-6.6.1
+cmake --build . --parallel 8
+cmake --install .
+```
 
 
 
