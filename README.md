@@ -840,18 +840,6 @@ Check connected displays
 ```bash
 xrandr
 ```
-### Please write Hello World
-```c
-#include <stdio.h>
-
-void main(void)
-{
- printf("Hello World...");
-}
-```
-```java
-System.out.println("Hello World");
-```
 
 
 
