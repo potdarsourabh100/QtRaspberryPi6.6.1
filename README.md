@@ -849,6 +849,9 @@ void main(void)
  printf("Hello World...");
 }
 ```
+```java
+System.out.println("Hello World");
+```
 
 
 
