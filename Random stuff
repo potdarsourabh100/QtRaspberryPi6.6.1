@@ -120,3 +120,111 @@ Reboot the System:
 bash
 Copy code
 sudo reboot
+
+If you’re using a USB touchscreen with a Raspberry Pi and you want to change the orientation of the touch input, you can follow these steps to adjust it. Unlike device tree overlays for GPIO-based touchscreens, USB touchscreens require different handling since they interact with the X Window System (X11) directly.
+Adjusting Touch Input Orientation for USB Touchscreen
+1. Identify the USB Touchscreen Device
+
+You need to determine the exact device name or ID of your USB touchscreen.
+
+    List Input Devices: Open a terminal and list all input devices:
+
+    sh
+
+    xinput list
+
+    Find your USB touchscreen in the list and note its device ID.
+
+2. Determine the Device ID
+
+To get detailed information about the device:
+
+sh
+
+xinput list-props <device_id>
+
+Replace <device_id> with the actual ID of your touchscreen device. This command will show you properties that you might need to modify.
+3. Apply Coordinate Transformation
+
+You can use xinput to apply a coordinate transformation matrix to rotate the touch input. Here’s how to set up different rotations:
+
+    For 90 Degrees Clockwise:
+
+    sh
+
+xinput set-prop <device_id> "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
+
+For 180 Degrees:
+
+sh
+
+xinput set-prop <device_id> "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
+
+For 270 Degrees Clockwise:
+
+sh
+
+    xinput set-prop <device_id> "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
+
+Replace <device_id> with your touchscreen’s ID. You might need to adjust these values depending on your specific touchscreen and its orientation.
+4. Make Changes Persistent
+
+The changes applied using xinput are temporary and will be lost after a reboot. To make them persistent:
+
+    Create a Startup Script:
+
+    Create a script that applies the xinput settings and place it in the appropriate startup location.
+
+    sh
+
+sudo nano /usr/local/bin/rotate-touchscreen.sh
+
+Add the following script to set the rotation. Adjust the command according to the rotation you need:
+
+sh
+
+#!/bin/bash
+xinput set-prop <device_id> "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
+
+Save and exit (Ctrl+X, Y, Enter).
+
+Make the Script Executable:
+
+sh
+
+sudo chmod +x /usr/local/bin/rotate-touchscreen.sh
+
+Add to Startup:
+
+You can add this script to your Raspberry Pi’s startup applications. If using a desktop environment like LXDE:
+
+sh
+
+nano ~/.config/lxsession/LXDE-pi/autostart
+
+Add the line:
+
+sh
+
+    @/usr/local/bin/rotate-touchscreen.sh
+
+    Save and exit.
+
+5. Test and Verify
+
+After making these changes, reboot your Raspberry Pi and verify that the touchscreen is correctly oriented. Ensure that touch input aligns with the display after reboot.
+Troubleshooting
+
+    If xinput Is Not Available: Ensure that you have xinput installed. If not, install it using:
+
+    sh
+
+sudo apt-get install xinput
+
+If the Touchscreen Does Not Respond as Expected: Double-check the matrix values and verify that you are using the correct device ID. Test the calibration using:
+
+sh
+
+    xinput_calibrator
+
+By following these steps, you should be able to change the orientation of touch input for a USB touchscreen on a Raspberry Pi effectively.
