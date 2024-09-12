@@ -831,6 +831,15 @@ Send the binaries to rpi. You should modify the following commands to your needs
 ```bash
 rsync -avz --rsync-path="sudo rsync" $HOME/qt6/pi/* pi@192.168.29.23:/usr/local/qt6
 ```
+# Rearrange displays to proper orientations
+Lets install xrandr services
+```bash
+sudo apt-get install x11-xserver-utils
+```
+Check connected displays
+```bash
+xrandr
+```
 
 
 
