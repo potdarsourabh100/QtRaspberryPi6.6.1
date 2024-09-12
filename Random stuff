@@ -1,0 +1,53 @@
+Step 3: X11 Configuration (for multiple screens)
+To manage both HDMI outputs independently, X11 needs to treat them as separate displays:
+
+Check Display Names: After rebooting, check the display identifiers using:
+
+bash
+Copy code
+xrandr
+You should see something like HDMI-1 and HDMI-2.
+
+Create X11 Configuration File: Create a new Xorg configuration file to handle the screens separately.
+
+bash
+Copy code
+sudo nano /etc/X11/xorg.conf.d/10-monitor.conf
+Add the Following Configuration:
+
+ini
+Copy code
+Section "Monitor"
+    Identifier "HDMI-1"
+EndSection
+
+Section "Monitor"
+    Identifier "HDMI-2"
+EndSection
+
+Section "Screen"
+    Identifier "Screen0"
+    Device "HDMI-1"
+    Monitor "HDMI-1"
+    DefaultDepth 24
+    SubSection "Display"
+        Depth 24
+        Modes "1920x1080"  # Adjust to your resolution
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier "Screen1"
+    Device "HDMI-2"
+    Monitor "HDMI-2"
+    DefaultDepth 24
+    SubSection "Display"
+        Depth 24
+        Modes "1920x1080"
+    EndSubSection
+EndSection
+Save the file and reboot again:
+
+bash
+Copy code
+sudo reboot
