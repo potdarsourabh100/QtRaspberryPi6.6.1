@@ -831,6 +831,46 @@ Send the binaries to rpi. You should modify the following commands to your needs
 ```bash
 rsync -avz --rsync-path="sudo rsync" $HOME/qt6/pi/* pi@192.168.29.23:/usr/local/qt6
 ```
+# Need X services to control graphical utilities
+Upgrade pi to new levels
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
+To install a minimal desktop environment with the X server, you can use the following commands:
+```bash
+sudo apt-get install xserver-xorg xinit lxde
+sudo apt-get install xserver-xorg xinit xfce4
+```
+Configure the System to Start the Graphical Interface:
+
+If you want the system to start the graphical environment by default, you need to set the default systemd target to graphical:
+```bash
+sudo systemctl set-default graphical.target
+```
+If you want to start the graphical environment manually, you can use:
+```bash
+xstart
+```
+Create a .xinitrc File (Optional)
+
+If you want to start your graphical session manually or ensure specific settings are applied when startx is run, you can create or edit the .xinitrc file in your home directory. This file is used by startx to launch the window manager or desktop environment.
+```bash
+nano ~/.xinitrc
+```
+Add the following line for LXDE:
+
+```bash
+exec startlxde
+```
+Or for XFCE:
+
+```bash
+exec startxfce4
+```
+Save the file and exit the editor.
+
 # Rearrange displays to proper orientations
 Lets install xrandr services
 ```bash
