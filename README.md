@@ -150,6 +150,10 @@ libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev  gstreamer1.0-alsa libvpx-d
 libsnappy-dev libnss3-dev "^libxcb.*" flex bison libxslt-dev ruby gperf libbz2-dev libcups2-dev \
 libatkmm-1.6-dev libxi6 libxcomposite1 libfreetype6-dev libicu-dev libsqlite3-dev libxslt1-dev 
 ```
+perform following option seeperately as it may not be performed automatically.
+```bash
+sudo apt-get install libxkbcommon-x11-dev
+```
 for QT based packages please provide following commands:
 ```bash
 sudo apt-get remove --purge qt6-base-dev
