@@ -189,6 +189,13 @@ libdtovl.so            libmmal.so             pkgconfig
 libEGL.so              libmmal_util.so        plugins
 libEGL_static.a        libmmal_vc_client.so
 ```
+# Note: 
+Your Raspberry Pi might not have a directory named
+```bash
+/opt/vc
+```
+and it is fine. Usually this directory contains proprietary Broadcom libraries, but during the testing the I did not find any issue with the lack of this directory. 
+
 # Host machine Prepartion
 I used ubuntu Ubuntu 24.04.1 LTS You can find out yours using
 ```bash
