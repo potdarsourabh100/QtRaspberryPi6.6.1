@@ -168,6 +168,15 @@ Update the changes.
 ```bash
 source ~/.bashrc
 ```
+Make a folder for qt6 installation.
+```bash
+sudo mkdir /usr/local/qt6
+```
+Grant full access to the fold used for the deployment from Qt Creator.
+```bash
+sudo chmod 777 /usr/local/bin
+```
+
 
 After this all, you should be able to see opengl libraries under /opt/vc/lib/ directory. This is important for future steps. Check like this:
 
