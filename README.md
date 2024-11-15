@@ -294,12 +294,13 @@ Now you have croos toolchain, if you like, you can compile simple hello world ap
 First we need to compile Qt for host. 
 
 ```bash
+cd ~
 mkdir qt6 qt6/host qt6/pi qt6/host-build qt6/pi-build qt6/src
 cd ~/qt6/src
-wget https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtbase-everywhere-src-6.6.1.tar.xz
-tar xf qtbase-everywhere-src-6.6.1.tar.xz 
+wget https://download.qt.io/official_releases/qt/6.8/6.8.0/submodules/qtbase-everywhere-src-6.8.0.tar.xz
+tar xf qtbase-everywhere-src-6.8.0.tar.xz 
 cd ~/qt6/host-build/
-cmake ../src/qtbase-everywhere-src-6.6.1/ -GNinja -DCMAKE_BUILD_TYPE=Release -DQT_BUILD_EXAMPLES=OFF -DQT_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/qt6/host
+cmake ../src/qtbase-everywhere-src-6.8.0/ -GNinja -DCMAKE_BUILD_TYPE=Release -DQT_BUILD_EXAMPLES=OFF -DQT_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$HOME/qt6/host
 cmake --build . --parallel 8
 cmake --install .
 ```
