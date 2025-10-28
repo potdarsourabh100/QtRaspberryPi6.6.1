@@ -1,230 +1,28 @@
-sudo apt-get install lxsession
-
-
-Step 3: X11 Configuration (for multiple screens)
-To manage both HDMI outputs independently, X11 needs to treat them as separate displays:
-
-Check Display Names: After rebooting, check the display identifiers using:
-
-bash
-Copy code
-xrandr
-You should see something like HDMI-1 and HDMI-2.
-
-Create X11 Configuration File: Create a new Xorg configuration file to handle the screens separately.
-
-bash
-Copy code
-sudo nano /etc/X11/xorg.conf.d/10-monitor.conf
-Add the Following Configuration:
-
-ini
-Copy code
-Section "Monitor"
-    Identifier "HDMI-1"
-EndSection
-
-Section "Monitor"
-    Identifier "HDMI-2"
-EndSection
-
-Section "Screen"
-    Identifier "Screen0"
-    Device "HDMI-1"
-    Monitor "HDMI-1"
-    DefaultDepth 24
-    SubSection "Display"
-        Depth 24
-        Modes "1920x1080"  # Adjust to your resolution
-    EndSubSection
-EndSection
-
-Section "Screen"
-    Identifier "Screen1"
-    Device "HDMI-2"
-    Monitor "HDMI-2"
-    DefaultDepth 24
-    SubSection "Display"
-        Depth 24
-        Modes "1920x1080"
-    EndSubSection
-EndSection
-Save the file and reboot again:
-
-Option 1: Create Xorg Configuration
-Create a new Xorg configuration file for your displays:
-
-bash
-Copy code
-sudo nano /etc/X11/xorg.conf.d/10-monitor.conf
-Add the following configuration to set the orientation:
-
-ini
-Copy code
-Section "Monitor"
-    Identifier "HDMI-1"
-    Option "Rotate" "normal"  # or left, right, inverted
-EndSection
-
-Section "Monitor"
-    Identifier "HDMI-2"
-    Option "Rotate" "normal"  # or left, right, inverted
-EndSection
-Save and reboot:
-
-bash
-Copy code
-sudo reboot
-
-Create a Startup Script:
-
-Create a script to run the xinput commands and launch the QT applications:
-
-bash
-Copy code
-sudo nano /usr/local/bin/start_dual_touch_qt.sh
-Add the Following to the Script:
-
-bash
-Copy code
-#!/bin/bash
-# Map touchscreens to their respective displays
-xinput map-to-output 10 HDMI-1
-xinput map-to-output 11 HDMI-2
-
-# Launch QT applications on separate screens
-export QT_QPA_EGLFS_PHYSICAL_SCREEN=0
-/path/to/your_qt_application_1 &
-
-export QT_QPA_EGLFS_PHYSICAL_SCREEN=1
-/path/to/your_qt_application_2 &
-Make the Script Executable:
-
-bash
-Copy code
-sudo chmod +x /usr/local/bin/start_dual_touch_qt.sh
-Add to Autostart:
-
-Add this script to your system's startup sequence by editing the LXDE autostart file:
-
-bash
-Copy code
-sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
-Add the following line at the end:
-
-bash
-Copy code
-@/usr/local/bin/start_dual_touch_qt.sh
-Reboot the System:
-
-bash
-Copy code
-sudo reboot
-
-If you’re using a USB touchscreen with a Raspberry Pi and you want to change the orientation of the touch input, you can follow these steps to adjust it. Unlike device tree overlays for GPIO-based touchscreens, USB touchscreens require different handling since they interact with the X Window System (X11) directly.
-Adjusting Touch Input Orientation for USB Touchscreen
-1. Identify the USB Touchscreen Device
-
-You need to determine the exact device name or ID of your USB touchscreen.
-
-    List Input Devices: Open a terminal and list all input devices:
-
-    sh
-
-    xinput list
-
-    Find your USB touchscreen in the list and note its device ID.
-
-2. Determine the Device ID
-
-To get detailed information about the device:
-
-sh
-
-xinput list-props <device_id>
-
-Replace <device_id> with the actual ID of your touchscreen device. This command will show you properties that you might need to modify.
-3. Apply Coordinate Transformation
-
-You can use xinput to apply a coordinate transformation matrix to rotate the touch input. Here’s how to set up different rotations:
-
-    For 90 Degrees Clockwise:
-
-    sh
-
-xinput set-prop <device_id> "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
-
-For 180 Degrees:
-
-sh
-
-xinput set-prop <device_id> "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
-
-For 270 Degrees Clockwise:
-
-sh
-
-    xinput set-prop <device_id> "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
-
-Replace <device_id> with your touchscreen’s ID. You might need to adjust these values depending on your specific touchscreen and its orientation.
-4. Make Changes Persistent
-
-The changes applied using xinput are temporary and will be lost after a reboot. To make them persistent:
-
-    Create a Startup Script:
-
-    Create a script that applies the xinput settings and place it in the appropriate startup location.
-
-    sh
-
-sudo nano /usr/local/bin/rotate-touchscreen.sh
-
-Add the following script to set the rotation. Adjust the command according to the rotation you need:
-
-sh
-
-#!/bin/bash
-xinput set-prop <device_id> "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
-
-Save and exit (Ctrl+X, Y, Enter).
-
-Make the Script Executable:
-
-sh
-
-sudo chmod +x /usr/local/bin/rotate-touchscreen.sh
-
-Add to Startup:
-
-You can add this script to your Raspberry Pi’s startup applications. If using a desktop environment like LXDE:
-
-sh
-
-nano ~/.config/lxsession/LXDE-pi/autostart
-
-Add the line:
-
-sh
-
-    @/usr/local/bin/rotate-touchscreen.sh
-
-    Save and exit.
-
-5. Test and Verify
-
-After making these changes, reboot your Raspberry Pi and verify that the touchscreen is correctly oriented. Ensure that touch input aligns with the display after reboot.
-Troubleshooting
-
-    If xinput Is Not Available: Ensure that you have xinput installed. If not, install it using:
-
-    sh
-
-sudo apt-get install xinput
-
-If the Touchscreen Does Not Respond as Expected: Double-check the matrix values and verify that you are using the correct device ID. Test the calibration using:
-
-sh
-
-    xinput_calibrator
-
-By following these steps, you should be able to change the orientation of touch input for a USB touchscreen on a Raspberry Pi effectively.
+# 1. Install required tools
+sudo apt-get update
+sudo apt-get install build-essential git bc bison flex libssl-dev libncurses5-dev wget
+
+# 2. Download and extract the cross toolchain
+cd ~
+wget https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabihf/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
+tar xf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
+export CROSS_COMPILE=~/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+export PATH=$PATH:~/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin
+
+# 3. Download BusyBox
+cd ~
+wget https://busybox.net/downloads/busybox-1.36.1.tar.bz2
+tar xvf busybox-1.36.1.tar.bz2
+cd busybox-1.36.1
+
+# 4. Configure for ARM cross-compilation
+make ARCH=arm CROSS_COMPILE=${CROSS_COMPILE} distclean
+make ARCH=arm CROSS_COMPILE=${CROSS_COMPILE} defconfig
+# Optionally make ARCH=arm CROSS_COMPILE=${CROSS_COMPILE} menuconfig
+
+# 5. Build
+make ARCH=arm CROSS_COMPILE=${CROSS_COMPILE} -j$(nproc)
+
+# 6. Install to rootfs directory
+mkdir ~/busybox_rootfs
+make ARCH=arm CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX=~/busybox_rootfs install
